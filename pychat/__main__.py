@@ -1,27 +1,23 @@
 import openai
+import os
+
+
+OPENAI_API_KEY='OPENAI_API_KEY'
 
 def main():
-    print("Welcome to PychatV.1 Client!\n")
+    openai_api_key = os.getenv(OPENAI_API_KEY)
+    if openai_api_key ==None:
+        print("OPENAI_API_KEY required")
+        exit(-1)
+        
+        
+    print("Pychat v0.1")
+    query = input('Input: ')
 
-    x = "yes"
-    while x == "yes":
-        try:
-            query = input("Input: ")
+    print("Query: {}".format(query))
+    completion = openai.Completion.create(engine ='text-davinci-003',prompt = query,max_tokens = 4000)
+    output = completion.choices[0].text
+    print("output:{}".format(output))
 
-            # print(f"Query: {query}")
-
-            completion = openai.Completion.create(engine="text-davinci-003", prompt=query, max_tokens=4000)
-
-            output = completion.choices[0].text
-
-            print(f"Output: {output}")
-
-        except Exception as e:
-            print(e)
-
-        x = input("Ask other? [yes / no] :")
-
-
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
